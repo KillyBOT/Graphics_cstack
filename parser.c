@@ -50,6 +50,8 @@ The file follows the following format:
                  takes 8 arguments (x0, y0, x1, y1, x2, y2, x3, y3)
          line: add a line to the edge matrix -
                takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
+         polygon: add a polygon to the polygon matrix -
+               takes 9 arguments (x0, y0, z0, x1, y1, z1, x2, y2, z2)
          ident: set the transform matrix to the identity matrix -
          scale: create a scale matrix,
                 then multiply the transform matrix by the scale matrix -
@@ -236,6 +238,31 @@ void parse_file ( char * filename,
 
       draw_lines(edges, s, c);
     }//end line
+
+    else if ( strncmp(line, "polygon", strlen(line)) == 0) {
+      fgets(line, sizeof(line), f);
+      //printf("LINE\t%s", line);
+
+      sscanf(line, "%lf %lf %lf %lf %lf %lf %lf %lf %lf",
+             xvals, yvals, zvals,
+             xvals+1, yvals+1, zvals+1,
+             xvals+2, yvals+2, zvals+2);
+      /*printf("%lf %lf %lf %lf %lf %lf",
+        xvals[0], yvals[0], zvals[0],
+        xvals[1], yvals[1], zvals[1]) */
+
+      free_matrix(polygons);
+      polygons = new_matrix(4, 4);
+
+      add_polygon(polygons, 
+        xvals[0], yvals[0], zvals[0],
+        xvals[1], yvals[1], zvals[1],
+        xvals[2], yvals[2], zvals[2]);
+
+      matrix_mult(peek(csystems), polygons);
+
+      draw_polygons(polygons, s, c);
+    }
 
     else if ( strncmp(line, "scale", strlen(line)) == 0 ) {
       fgets(line, sizeof(line), f);

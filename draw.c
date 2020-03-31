@@ -91,12 +91,9 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 void add_box( struct matrix *polygons,
               double x, double y, double z,
               double width, double height, double depth ) {
-  double x0, y0, z0, x1, y1, z1;
-  x0 = x;
+  double x1, y1, z1;
   x1 = x+width;
-  y0 = y;
   y1 = y-height;
-  z0 = z;
   z1 = z-depth;
 
 
