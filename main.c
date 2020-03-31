@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
   edges = new_matrix(4, 4);
   polygons = new_matrix(4, 4);
   csystems = new_stack();
+  clear_screen(s);
   if ( argc == 2 )
     parse_file( argv[1], csystems, edges, polygons, s );
   else
